@@ -1,6 +1,7 @@
 package test;
 
-import javax.swing.JFrame;
+import javax.swing.*;
+import java.awt.*;
 
 import main.*;
 
@@ -19,5 +20,4 @@ public class Main {
 		obj.add(gamePlay);
         obj.setVisible(true);
 	}
-
 }

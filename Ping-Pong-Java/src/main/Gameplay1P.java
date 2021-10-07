@@ -45,7 +45,7 @@ public class Gameplay1P extends JPanel implements KeyListener, ActionListener {
 	
 	public void paint(Graphics g) {
 		g.setColor(Color.black);
-		g.fillRect(1, 1, 700, 512);
+		g.fillRect(0, 0, 700, 512);
 		
 		//Middle line
 		g.setColor(Color.white);
@@ -95,22 +95,12 @@ public class Gameplay1P extends JPanel implements KeyListener, ActionListener {
 			
 			//ball hits computer paddle
 			if (new Rectangle(ballPosX, ballPosY, 20, 20).intersects(new Rectangle(10, comY, 10, 75))) {
-				if (ballVelX < 0) {
-					ballVelX = Math.abs(ballVelX) + 2;
-				}
-				else {
-					ballVelX = -(ballVelX + 2);
-				}
+				ballVelX =  Math.abs(ballVelX) + 2;
 			}
 			
 			//when ball hit player paddle
 			if (new Rectangle(ballPosX, ballPosY, 20, 20).intersects(new Rectangle(680, playerY, 10, 75))) {
-				if (ballVelX < 0) {
-					ballVelX = Math.abs(ballVelX) + 2;
-				}
-				else {
-					ballVelX = -(ballVelX + 2);
-				}
+				ballVelX = -(Math.abs(ballVelX)+2);
 				score++;
 			}
 			
