@@ -42,8 +42,8 @@ ball.color("white")
 ball.penup()
 ball.goto(0,0)
 random.seed(datetime.now())
-ball.dx = -0.1 if random.randint(1,10) % 2 == 0 else 0.1
-ball.dy = -0.1 if random.randint(1, 10) % 2 == 0 else 0.1
+ball.dx = 0
+ball.dy = 0
 
 score = turtle.Turtle()
 score.speed(0)
@@ -52,6 +52,8 @@ score.penup()
 score.hideturtle()
 score.goto(0, 260)
 score.write("Player Score: 0", align="center", font=("Courier", 20, "normal"))
+score.goto(0, 100)
+score.write("Press Space to start", align="center", font=("Courier", 20, "normal"))
 
 def paddleUp():
     y = playerPaddle.ycor()
@@ -65,10 +67,16 @@ def paddleDown():
         y -= 30
     playerPaddle.sety(y)
 
-
+def startGame():
+    ball.dx = -0.1 if random.randint(1,10) % 2 == 0 else 0.1
+    ball.dy = -0.1 if random.randint(1,10) % 2 == 0 else 0.1
+    score.clear()
+    score.goto(0, 260)
+    score.write("Player Score: 0", align="center", font=("Courier", 20, "normal"))
 
 while True:
     screen.listen()
+    screen.onkeypress(startGame)
     screen.onkeypress(paddleUp, "Up")
     screen.onkeypress(paddleDown, "Down")
 
