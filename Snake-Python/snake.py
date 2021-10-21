@@ -48,8 +48,8 @@ class Snake:
         #direction 1 is up; -1 is down; -2 is left; 2 is right; 0 is stop
         self.direction = 0
         self.length = 1
-        self.x = [random.randint(1, 47) * SIZE]
-        self.y = [random.randint(1, 37) * SIZE]
+        self.x = [random.randint(3, 45) * SIZE]
+        self.y = [random.randint(3, 35) * SIZE]
 
     def move(self, direction):
         if -direction != self.direction or direction == self.direction:
