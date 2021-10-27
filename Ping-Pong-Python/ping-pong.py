@@ -2,6 +2,8 @@ import turtle
 import random
 from datetime import datetime
 
+random.seed(datetime.now())
+
 playerScore = 0
 
 screen = turtle.Screen()
@@ -41,7 +43,6 @@ ball.shape("circle")
 ball.color("white")
 ball.penup()
 ball.goto(0,0)
-random.seed(datetime.now())
 ball.dx = 0
 ball.dy = 0
 
@@ -53,7 +54,16 @@ score.hideturtle()
 score.goto(0, 260)
 score.write("Player Score: 0", align="center", font=("Courier", 20, "normal"))
 score.goto(0, 100)
-score.write("Press Space to start", align="center", font=("Courier", 20, "normal"))
+score.write("Press Enter to start", align="center", font=("Courier", 20, "normal"))
+
+def reset():
+    ball.speed(0)
+    ball.shape("circle")
+    ball.color("white")
+    ball.penup()
+    ball.goto(0,0)
+    ball.dx = 0
+    ball.dy = 0
 
 def paddleUp():
     y = playerPaddle.ycor()
@@ -68,21 +78,29 @@ def paddleDown():
     playerPaddle.sety(y)
 
 def startGame():
-    ball.dx = -0.1 if random.randint(1,10) % 2 == 0 else 0.1
-    ball.dy = -0.1 if random.randint(1,10) % 2 == 0 else 0.1
+    playerScore = 0
+    ball.dx = random.randint(-50,50) / 100
+    ball.dy = random.randint(-50,50) / 100
     score.clear()
     score.goto(0, 260)
-    score.write("Player Score: 0", align="center", font=("Courier", 20, "normal"))
+    score.write("Player Score: {}".format(playerScore), align="center", font=("Courier", 20, "normal"))
 
-while True:
+def exit():
+    run = False
+    turtle.bye()
+
+run = True
+
+while run:
     screen.listen()
-    screen.onkeypress(startGame)
+    screen.onkeypress(startGame, "Return")
+    screen.onkeypress(exit, "Escape")
     screen.onkeypress(paddleUp, "Up")
     screen.onkeypress(paddleDown, "Down")
 
     screen.update()
 
-     # move the ball
+    # move the ball
     ball.setx(ball.xcor() + ball.dx)
     ball.sety(ball.ycor() + ball.dy)
 
@@ -107,8 +125,11 @@ while True:
         score.write("Player Score: {}".format(playerScore), align="center", font=("Courier", 20, "normal"))
         score.goto(0, 0)
         score.write("Game Over", align="center", font=("Courier", 40, "bold"))
-        ball.goto(0,0)
-        break
+        score.goto(0, -40)
+        score.write("Press Enter to play again.", align="center", font=("Courier", 20, "normal"))
+        score.goto(0, -80)
+        score.write("Press Escape to Exit.", align="center", font=("Courier", 20, "normal"))
+        reset()
 
     if (ball.xcor() > 340 and ball.xcor() < 350) and (playerPaddle.ycor() + 50 > ball.ycor() > playerPaddle.ycor() - 50):
         playerScore += 1
@@ -119,26 +140,26 @@ while True:
     # paddle and ball collisions
     if (ball.xcor() > 340 and ball.xcor() < 350) and (playerPaddle.ycor() + 50 > ball.ycor() > playerPaddle.ycor() - 50):
         ball.setx(340)
-        ball.dx *= -1
-        if abs(ball.dx) < 1:
-            ball.dx += -0.1 if random.randint(1,10) % 2 == 0 else 0.1
-            if ball.dx == 0:
-                ball.dx -= 0.1
-        if abs(ball.dy) < 1:
-            ball.dy += -0.1 if random.randint(1,10) % 2 == 0 else 0.1
-            if ball.dy == 0:
-                ball.dy -= 0.1
+        ball.dx = random.randint(-100, 1) / 100
+        # if abs(ball.dx) < 1:
+        #     ball.dx += -0.1 if random.randint(1,10) % 2 == 0 else 0.1
+        #     if ball.dx == 0:
+        #         ball.dx -= 0.07
+        if -1 <= ball.dy <= 1:
+            if ball.dy < 0:
+                ball.dy -= 0.03
+            else:
+                ball.dy += 0.03
 
     if (ball.xcor() < -340 and ball.xcor() > -350) and (compPaddle.ycor() + 50 > ball.ycor() > compPaddle.ycor() - 50):
         ball.setx(-340)
-        ball.dx *= -1
-        if abs(ball.dx) < 1:
-            ball.dx += -0.1 if random.randint(1,10) % 2 == 0 else 0.1
-            if ball.dx == 0:
-                ball.dx += 0.1
-        if abs(ball.dy) < 1:
-            ball.dy += -0.1 if random.randint(1,10) % 2 == 0 else 0.1
-            if ball.dy == 0:
-                ball.dy += 0.1
-
-turtle.done()
+        ball.dx = random.randint(1, 100) / 100
+        # if abs(ball.dx) < 1:
+        #     ball.dx += -0.1 if random.randint(1,10) % 2 == 0 else 0.1
+        #     if ball.dx == 0:
+        #         ball.dx += 0.07
+        if -1 <= ball.dy <= 1:
+            if ball.dy < 0:
+                ball.dy -= 0.03
+            else:
+                ball.dy += 0.03
